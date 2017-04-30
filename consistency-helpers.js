@@ -2,8 +2,14 @@ function _isObject(obj) {
   return obj === Object(obj);
 }
 
+let isConsistent = Symbol('raml2obj:isConsistent');
+
 function makeConsistent(obj, types) {
   if (_isObject(obj)) {
+    if (obj[isConsistent]) {
+      return;
+    }
+    obj[isConsistent] = true;
     if (obj.type) {
       if (Array.isArray(obj.type)) {
         obj.type = obj.type[0];
